@@ -1,6 +1,8 @@
 import sys
 import signal
 import struct
+from time import time
+
 import numpy as np
 import paho.mqtt.client as mqtt
 
@@ -10,7 +12,11 @@ class MeasurementsRecoder:
         self.measurements_cnt = measurements_cnt
         self.measurements_finished = 0
         self.measurements_indexer = np.zeros(active_adc_pins, dtype=np.int32)
-        self.measurements = np.zeros((active_adc_pins, measurements_cnt, 2))
+        self.measurements = {
+            "seq_no": np.zeros((active_adc_pins, measurements_cnt), dtype=np.uint64),
+            "value": np.zeros((active_adc_pins, measurements_cnt), dtype=np.float),
+            "time": np.zeros((active_adc_pins, measurements_cnt), dtype=np.float)
+        }
 
         self.client = mqtt.Client(client_id=client_id)
         self.client.on_connect = self.on_connect
@@ -43,12 +49,16 @@ class MeasurementsRecoder:
                 self.measurements_finished += 1
                 if self.measurements_finished == self.active_adc_pins:
                     self.client.disconnect()
-                    with open("measurements.npy", "wb") as file:
-                        np.save(file, self.measurements)
+                    np.savez("measurements.npz",
+                        seq_no=self.measurements["seq_no"],
+                        value=self.measurements["value"],
+                        time=self.measurements["time"]
+                    )
                 return 0
 
-            self.measurements[pin_no, self.measurements_indexer[pin_no], 0] = seq_no
-            self.measurements[pin_no, self.measurements_indexer[pin_no], 1] = value
+            self.measurements["seq_no"][pin_no, self.measurements_indexer[pin_no]] = seq_no
+            self.measurements["value"][pin_no, self.measurements_indexer[pin_no]] = value
+            self.measurements["time"][pin_no, self.measurements_indexer[pin_no]] = time()
             self.measurements_indexer[pin_no] += 1
 
             if self.measurements_indexer[pin_no] % 1000 == 0:
@@ -60,7 +70,7 @@ class MeasurementsRecoder:
 
     def signal_handler(self, sig, frame):
         self.client.disconnect()
-        with open("measurements.npy", "wb") as file:
+        with open("measurements.npz", "wb") as file:
             np.save(file, self.measurements)
         print("Got interrupted, saving...")
         sys.exit(0)
