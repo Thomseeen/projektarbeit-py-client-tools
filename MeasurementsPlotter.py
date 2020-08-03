@@ -2,15 +2,19 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 with open("measurements.npy", "rb") as file:
-  measurements = np.load(file)
+    measurements = np.load(file)
 
-print(measurements.shape[0])
-print(measurements[:, 0][:10])
+print(f"Got measurements with shape {measurements.shape}")
+print(f"First entry is {measurements[0][0]}")
 
-for cnt in range(measurements.shape[0]):
-  if cnt not in measurements[:, 0]:
-    print(f"Missing index {cnt}")
+for pin_no in range(measurements.shape[0]):
+    for index in range(measurements.shape[1] - 1):
+        if measurements[pin_no, index, 0] + 1 != measurements[pin_no, index + 1, 0]:
+            print(f"Missing seq_no {measurements[pin_no, index, 0] + 1} for pin {pin_no}")
 
-plt.plot(measurements[:, 0])
+fig, axes = plt.subplots(measurements.shape[0])
+
+for pin_no, ax in enumerate(axes):
+    ax.plot(measurements[pin_no, :, 0])
 
 plt.show()
