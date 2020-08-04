@@ -49,7 +49,7 @@ class MeasurementsRecoder:
                 self.measurements_finished += 1
                 if self.measurements_finished == self.active_adc_pins:
                     self.client.disconnect()
-                    np.savez("measurements_BBB-BBB.npz",
+                    np.savez("measurements_BBB-BBB-10Hz.npz",
                         seq_no=self.measurements["seq_no"],
                         value=self.measurements["value"],
                         time=self.measurements["time"])
@@ -60,7 +60,7 @@ class MeasurementsRecoder:
             self.measurements["time"][pin_no, self.measurements_indexer[pin_no]] = time()
             self.measurements_indexer[pin_no] += 1
 
-            if self.measurements_indexer[pin_no] % 10000 == 0:
+            if self.measurements_indexer[pin_no] % 1000 == 0:
                 print(f"Pin {pin_no} is at {self.measurements_indexer[pin_no]} measurements")
 
         except Exception:
@@ -69,7 +69,7 @@ class MeasurementsRecoder:
 
     def signal_handler(self, sig, frame):
         self.client.disconnect()
-        np.savez("measurements_BBB-BBB.npz",
+        np.savez("measurements_BBB-BBB-10Hz.npz",
             seq_no=self.measurements["seq_no"],
             value=self.measurements["value"],
             time=self.measurements["time"])
