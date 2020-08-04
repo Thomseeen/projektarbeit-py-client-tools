@@ -60,7 +60,7 @@ class MeasurementsRecoder:
             self.measurements["time"][pin_no, self.measurements_indexer[pin_no]] = time()
             self.measurements_indexer[pin_no] += 1
 
-            if self.measurements_indexer[pin_no] % 1000 == 0:
+            if self.measurements_indexer[pin_no] % 10000 == 0:
                 print(f"Pin {pin_no} is at {self.measurements_indexer[pin_no]} measurements")
 
         except Exception:
@@ -84,7 +84,7 @@ if __name__ == "__main__":
     TOPIC = "lfd1/#"
     QOS = 0
     KEEP_ALIVE = 30  # s
-    MEASUREMENTS_CNT = 50000  # @100Hz per pin -> 500s = 8.3min, Wrap around of libpruio RB at 10000 per pin
+    MEASUREMENTS_CNT = 200000  # @100Hz per pin -> 500s = 33.3min, Wrap around of libpruio RB at 10000 per pin
     ACTIVE_ADC_PINS = 4
 
     measurements_recorder = MeasurementsRecoder(ADDRESS, PORT, CLIENTID, TOPIC, QOS, KEEP_ALIVE,
