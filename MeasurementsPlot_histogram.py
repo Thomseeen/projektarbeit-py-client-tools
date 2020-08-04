@@ -2,7 +2,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-measurements = np.load("measurements_BBB-BBB-100Hz.npz")
+measurements = np.load("measurements_BBB-BBB-10Hz.npz")
 
 print(f"Got measurements  {measurements}")
 print(f"First entry value is {measurements['value'][0][0]}")
@@ -20,16 +20,16 @@ for pin_no in range(m["seq_no"].shape[0]):
 
 fig = plt.figure(figsize=(12, 8), dpi=80)
 
-sns.distplot(deltas, bins=100)
-plt.xlim([0, 30])
+sns.distplot(deltas, kde=False)
+plt.xlim([75, 125])
 
 plt.xlabel("Delta to last measurement in ms", fontsize=20)
-plt.ylabel("Density", fontsize=20)
+plt.ylabel("Measurements in bin", fontsize=20)
 
 plt.xticks(fontsize=14, color="grey")
 plt.yticks(fontsize=14, color="grey")
 
-plt.title(f"99% percentile {np.percentile(deltas, 99.7):.2f} ms\n@ 2E5 measurements per pin at 100Hz samplerate", fontsize=18)
+plt.title(f"99% percentile {np.percentile(deltas, 99.7):.2f} ms\n@ 2E4 measurements per pin at 10Hz samplerate", fontsize=18)
 
 plt.grid(True)
 
