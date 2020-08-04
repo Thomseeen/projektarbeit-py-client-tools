@@ -49,7 +49,7 @@ class MeasurementsRecoder:
                 self.measurements_finished += 1
                 if self.measurements_finished == self.active_adc_pins:
                     self.client.disconnect()
-                    np.savez("measurements_VM-BBB.npz",
+                    np.savez("measurements_BBB-BBB.npz",
                         seq_no=self.measurements["seq_no"],
                         value=self.measurements["value"],
                         time=self.measurements["time"])
@@ -69,7 +69,7 @@ class MeasurementsRecoder:
 
     def signal_handler(self, sig, frame):
         self.client.disconnect()
-        np.savez("measurements_VM-BBB.npz",
+        np.savez("measurements_BBB-BBB.npz",
             seq_no=self.measurements["seq_no"],
             value=self.measurements["value"],
             time=self.measurements["time"])
