@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-measurements = np.load("measurements_VM-BBB.npz")
+measurements = np.load("measurements_BBB-BBB-100Hz.npz")
 
 print(f"Got measurements  {measurements}")
 print(f"First entry value is {measurements['value'][0][0]}")
@@ -33,7 +33,7 @@ plt.ylabel("Delta to last measurement in ms", fontsize=20)
 plt.xticks(fontsize=14, color="grey")
 plt.yticks(fontsize=14, color="grey")
 
-plt.title(f"Delta avg. {deltas.mean()*1000:.2f} ms @ 2E5 measurements per pin at 100Hz samplerate", fontsize=18)
+plt.title(f"Delta avg. {deltas.mean()*1000:.2f} ms @ 2E4 measurements per pin at 10Hz samplerate", fontsize=18)
 
 plt.grid(True)
 

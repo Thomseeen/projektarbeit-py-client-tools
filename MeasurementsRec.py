@@ -83,7 +83,8 @@ if __name__ == "__main__":
     TOPIC = "lfd1/#"
     QOS = 0
     KEEP_ALIVE = 30  # s
-    MEASUREMENTS_CNT = 200000  # @100Hz per pin -> 500s = 33.3min, Wrap around of libpruio RB at 10000 per pin
+    MEASUREMENTS_CNT = 20000    # 200000 @100Hz per pin -> 2000s = 33.3min, Wrap around of libpruio RB at 10000 per pin
+                                # 20000  @10Hz  per pin -> 2000s = ...
     ACTIVE_ADC_PINS = 4
 
     measurements_recorder = MeasurementsRecoder(ADDRESS, PORT, CLIENTID, TOPIC, QOS, KEEP_ALIVE,
