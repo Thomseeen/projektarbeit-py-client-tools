@@ -2,7 +2,6 @@ from time import time, sleep
 
 import random
 import numpy as np
-import matplotlib.pyplot as plt
 import paho.mqtt.client as mqtt
 
 
@@ -50,6 +49,6 @@ sending_client.disconnect()
 sleep(SEND_PERIOD * MESSAGES_CNT * 2)
 listening_client.disconnect()
 
-np.savez("delay_benchmark_VM-Udoo-1kHz.npz",
+np.savez("delay_benchmark_BBB-Udoo-1kHz.npz",
     recv_timestamps=recv_timestamps,
     send_timestamps=send_timestamps)

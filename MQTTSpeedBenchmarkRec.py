@@ -55,7 +55,7 @@ sending_client.disconnect()
 sleep(20)
 listening_client.disconnect()
 
-np.savez("speed_benchmark_VM-Udoo.npz",
+np.savez("speed_benchmark_BBB-Udoo.npz",
     send_freq=np.array(measurements["send_freq"]),
     recv_freq=np.array(measurements["recv_freq"]))
         
