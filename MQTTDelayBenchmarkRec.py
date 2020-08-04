@@ -7,9 +7,9 @@ import paho.mqtt.client as mqtt
 
 
 BROKER = "192.168.178.16"
-MESSAGES_CNT = 10000
+MESSAGES_CNT = 100000
 PAYLOAD_LEN = 256
-SEND_PERIOD = 0.001 # seconds
+SEND_PERIOD = 0.0001 # seconds
 TOPIC = "test"
 
 recv_counter = 0
@@ -50,9 +50,6 @@ sending_client.disconnect()
 sleep(SEND_PERIOD * MESSAGES_CNT * 2)
 listening_client.disconnect()
 
-delays = recv_timestamps - send_timestamps
-
-print(f"Delays avg.: {delays.mean()}")
-
-plt.plot(recv_timestamps - send_timestamps)
-plt.show()
+np.savez("delay_benchmark.npz",
+    recv_timestamps=recv_timestamps,
+    send_timestamps=send_timestamps)
