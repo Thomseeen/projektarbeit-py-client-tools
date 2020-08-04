@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-measurements = np.load("delay_benchmark_VM-Udoo-1kHz.npz")
+measurements = np.load("delay_benchmark_BBB-Udoo-1kHz.npz")
 
 m = dict()
 m["recv_timestamps"] = measurements["recv_timestamps"]

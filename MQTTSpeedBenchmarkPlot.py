@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-measurements = np.load("speed_benchmark_VM-Udoo.npz")
+measurements = np.load("speed_benchmark_BBB-Udoo.npz")
 
 m = dict()
 m["send_freq"] = measurements["send_freq"]
