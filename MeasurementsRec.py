@@ -49,7 +49,7 @@ class MeasurementsRecoder:
                 self.measurements_finished += 1
                 if self.measurements_finished == self.active_adc_pins:
                     self.client.disconnect()
-                    np.savez("measurements.npz",
+                    np.savez("measurements_VM-BBB.npz",
                         seq_no=self.measurements["seq_no"],
                         value=self.measurements["value"],
                         time=self.measurements["time"])
@@ -69,11 +69,10 @@ class MeasurementsRecoder:
 
     def signal_handler(self, sig, frame):
         self.client.disconnect()
-        with open("measurements.npz", "wb") as file:
-            np.savez("measurements.npz",
-                seq_no=self.measurements["seq_no"],
-                value=self.measurements["value"],
-                time=self.measurements["time"])
+        np.savez("measurements_VM-BBB.npz",
+            seq_no=self.measurements["seq_no"],
+            value=self.measurements["value"],
+            time=self.measurements["time"])
         print("Got interrupted, saving...")
         sys.exit(0)
 

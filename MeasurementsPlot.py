@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-measurements = np.load("measurements.npz")
+measurements = np.load("measurements_VM-BBB.npz")
 
 print(f"Got measurements  {measurements}")
 print(f"First entry value is {measurements['value'][0][0]}")
