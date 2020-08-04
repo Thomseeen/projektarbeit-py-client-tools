@@ -6,7 +6,7 @@ import paho.mqtt.client as mqtt
 
 
 BROKER = "192.168.178.16"
-MESSAGES_CNT = 1000000
+MESSAGES_CNT = 100000
 PAYLOAD_LEN = 128
 TOPIC = "test"
 
@@ -55,7 +55,7 @@ sending_client.disconnect()
 sleep(20)
 listening_client.disconnect()
 
-np.savez("speed_benchmark.npz",
+np.savez("speed_benchmark_VM-Udoo.npz",
     send_freq=np.array(measurements["send_freq"]),
     recv_freq=np.array(measurements["recv_freq"]))
         

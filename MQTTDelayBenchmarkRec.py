@@ -7,9 +7,9 @@ import paho.mqtt.client as mqtt
 
 
 BROKER = "192.168.178.16"
-MESSAGES_CNT = 100000
+MESSAGES_CNT = 10000
 PAYLOAD_LEN = 256
-SEND_PERIOD = 0.0001 # seconds
+SEND_PERIOD = 0.001 # seconds
 TOPIC = "test"
 
 recv_counter = 0
@@ -50,6 +50,6 @@ sending_client.disconnect()
 sleep(SEND_PERIOD * MESSAGES_CNT * 2)
 listening_client.disconnect()
 
-np.savez("delay_benchmark.npz",
+np.savez("delay_benchmark_VM-Udoo-1kHz.npz",
     recv_timestamps=recv_timestamps,
     send_timestamps=send_timestamps)
